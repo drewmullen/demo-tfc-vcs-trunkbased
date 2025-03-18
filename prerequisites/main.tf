@@ -1,11 +1,15 @@
+locals {
+  project_name = "demo-tfc-vcs-trunkbased"
+}
+
 resource "tfe_project" "app" {
-  organization = "mullen-hashi"
-  name         = "demo-tfc-vcs-trunkbased"
+  organization = var.organization
+  name         = local.project_name
 }
 
 resource "tfe_workspace" "dev" {
     name         = "dev"
-    organization = "mullen-hashi"
+    organization = var.organization
     project_id   = tfe_project.app.id
 
     auto_apply            = true
@@ -25,14 +29,14 @@ resource "tfe_workspace" "dev" {
 
 resource "tfe_variable" "dev_cli_args" {
     key          = "TF_CLI_ARGS"
-    value        = "-var-file=envs/dev/terraform.tfvars -var-file=envs/common.tfvars"
+    value        = "-var-file=envs/dev/dev.tfvars -var-file=envs/common.tfvars"
     category     = "env"
     workspace_id = tfe_workspace.dev.id
 }
 
 resource "tfe_workspace" "prod" {
     name         = "prod"
-    organization = "mullen-hashi"
+    organization = var.organization
     project_id   = tfe_project.app.id
 
     auto_apply            = true
@@ -47,4 +51,11 @@ resource "tfe_workspace" "prod" {
         
         github_app_installation_id = "ghain-gurYHzDBdnByPE5g"
     }
+}
+
+resource "tfe_variable" "prod_cli_args" {
+    key          = "TF_CLI_ARGS"
+    value        = "-var-file=envs/prod/prod.tfvars -var-file=envs/common.tfvars"
+    category     = "env"
+    workspace_id = tfe_workspace.prod.id
 }
