@@ -17,7 +17,7 @@ resource "tfe_workspace" "dev" {
     file_triggers_enabled = true
     trigger_patterns      = [
       "envs/dev/**/*",
-    #   "./*"
+      "./*"
     ]
     vcs_repo {
         branch     = "main"
