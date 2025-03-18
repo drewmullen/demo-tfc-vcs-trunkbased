@@ -53,6 +53,9 @@ EOT
 # TFC_VAULT_AUTH_PATH     = path to the JWT auth backend
 # TFC_VAULT_ADDR          = address of the Vault instance
 
+# because its my homelab i also need to set ca info
+# TFC_DEFAULT_VAULT_ENCODED_CACERT 
+
 resource "tfe_variable_set" "vault_admin_auth_role" {
   organization = var.organization
   name         = local.project_name
@@ -97,6 +100,16 @@ resource "tfe_variable" "tfc_vault_addr" {
   sensitive = true
 
   description = "The address of the Vault instance runs will access."
+}
+
+resource "tfe_variable" "tfc_vault_ca" {
+  variable_set_id = tfe_variable_set.vault_admin_auth_role.id
+
+  key       = "TFC_DEFAULT_VAULT_ENCODED_CACERT"
+  value     = var.vault_ca_base64_encoded
+  category  = "env"
+
+  description = "The base64 encoded CA cert for the Vault instance runs will access."
 }
 
 # Assign variable set to workspace

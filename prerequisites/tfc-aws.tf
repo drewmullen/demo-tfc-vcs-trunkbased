@@ -26,6 +26,7 @@ EOF
 # TFC_VAULT_BACKED_AWS_AUTH = true
 # TFC_VAULT_BACKED_AWS_AUTH_TYPE = iam_user
 # TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE = personal-demo-role-ssm
+# AWS_REGION = us-east-1
 
 resource "tfe_variable_set" "aws_vault_backend" {
   organization = var.organization
@@ -60,6 +61,16 @@ resource "tfe_variable" "tfc_vault_backend_aws_run_vault_role" {
   category = "env"
 
   description = "The Vault role to use for AWS authentication."
+}
+
+resource "tfe_variable" "aws_region" {
+  variable_set_id = tfe_variable_set.aws_vault_backend.id
+
+  key      = "AWS_REGION"
+  value    = "us-east-1"
+  category = "env"
+
+  description = "The AWS region to use for Vault authentication."
 }
 
 # Assign variable set to workspace
