@@ -1,4 +1,11 @@
-# Terraform repo template
+# Demo: TFC + VCS + trunk based development
+
+Goal of this demo is to showcase:
+1. creating tfe_ resources 
+1. using vcs repos
+1. vault-backed secrets
+1. ? dynamic secrets
+
 
 ## TL;DR usage
 
