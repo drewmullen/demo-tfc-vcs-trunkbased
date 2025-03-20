@@ -21,8 +21,11 @@ Prereqs:
 - show in tfc
 
 First Build:
-- uncomment random resource + git push 
-- review first builds (might have to kick off prod)
+- uncomment random resource 
+- `git switch -c create-random-pet; git commit -am 'build random pet resource'; git push` 
+- create pr
+- review plans 
+- merge 
 
 Adding in a provider that needs auth:
 
