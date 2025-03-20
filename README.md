@@ -23,6 +23,7 @@ Prereqs:
 First Build:
 - uncomment random resource 
 - `git switch -c create-random-pet; git commit -am 'build random pet resource'; git push` 
+- create pr
 - review plans 
 - merge 
 
