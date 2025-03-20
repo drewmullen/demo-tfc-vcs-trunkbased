@@ -1,53 +1,49 @@
 # Demo: TFC + VCS + trunk based development
 
+Set 
+
 Goal of this demo is to showcase:
 1. creating tfe_ resources 
 1. using vcs repos
 1. vault-backed secrets
-1. ? dynamic secrets
+1. aws dynamic secrets (iam user)
+
+Preamble: 
+- explain vcs driven workflow overview
+- explain trunk based dev (1 root, n envs)
+
+Prereqs:
+- show repo in github
+  - explain relationship to tfvars files
+- tfvars could become variables on the workspace - not today!
+- explain `main.tf` resources & arguments
+- `terraform apply`
+- show in tfc
+
+First Build:
+- uncomment random resource + git push 
+- review first builds (might have to kick off prod)
 
 
-## TL;DR usage
+Adding in a provider that needs auth:
 
-1. [install pre-commit](https://pre-commit.com/)
-2. configure pre-commit: `pre-commit install`
-3. install required tools
-    - [tflint](https://github.com/terraform-linters/tflint)
-    - [trivy](https://trivy.dev/latest/getting-started/)
-    - [terraform-docs](https://github.com/terraform-docs/terraform-docs)
+This is a pretty simple example to show the workflow. Next lets discuss another feature in TFC to assist in auth workflows. All providers need to authenticate to their destination APIs. show picture: https://www.hashicorp.com/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F2885%2F1682348441-vault-backed-dynamic-creds.png&w=3840&q=75
 
-## Module Documentation
+Using OIDC you can build a trust between Vault and TFC, allow specific tfc workspaces or projects access to a Vault role. TFC has a feature that allows it before a `plan` phase to auth to vault and check out secrets for use with a provider.
 
-**Do not manually update README.md after `BEGIN_TF_DOCS`**. `terraform-docs` is used to generate README files. For any instructions an content, please update above the `BEGIN_TF_DOCS` tag then simply run `terraform-docs ./` or allow the `pre-commit` to do so.
+Vault:
+- uncomment `tfc-vault.tf`
+- walkthrough code
+  - vault resources
+  - tfe resources
+- `terraform apply`
+- uncomment ssm param + git push
+- show failure
 
-## References
-
-[References](./.header.md)
-
-<!-- BEGIN_TF_DOCS -->
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
-
-## Providers
-
-No providers.
-
-## Modules
-
-No modules.
-
-## Resources
-
-No resources.
-
-## Inputs
-
-No inputs.
-
-## Outputs
-
-No outputs.
-<!-- END_TF_DOCS -->
+AWS:
+- uncomment `tfc-aws.tf`
+- walkthrough code
+- `terraform apply`
+- uncomment ssm param + git push
+- show success
+- show ssm param

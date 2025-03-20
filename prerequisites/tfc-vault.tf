@@ -44,6 +44,30 @@ path "*" {
 EOT
 }
 
+resource "vault_aws_secret_backend" "aws_secret_backend" {
+  path       = "aws"
+  access_key = data.environment_variable.aws_access_key.value
+  secret_key = data.environment_variable.aws_secret_key.value
+}
+
+resource "vault_aws_secret_backend_role" "aws_secret_backend_role" {
+  backend         = vault_aws_secret_backend.aws_secret_backend.path
+  name            = "personal-demo-role-ssm"
+  credential_type = "iam_user"
+  policy_document = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ssm:*",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 ##################################
 # TFC Workspace Trust Resources
 ##################################
@@ -107,6 +131,7 @@ resource "tfe_variable" "tfc_vault_ca" {
 
   key       = "TFC_DEFAULT_VAULT_ENCODED_CACERT"
   value     = var.vault_ca_base64_encoded
+  sensitive = true
   category  = "env"
 
   description = "The base64 encoded CA cert for the Vault instance runs will access."

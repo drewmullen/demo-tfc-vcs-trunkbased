@@ -14,17 +14,19 @@ resource "tfe_workspace" "dev" {
 
     auto_apply            = true
     queue_all_runs        = true
+    speculative_enabled   = true
+
     file_triggers_enabled = true
     trigger_patterns      = [
-      "envs/dev/**/*",
-      "./*"
+      "envs/dev/**/*", # changes to dev tfvars
+      "./*"            # changes to root
     ]
     vcs_repo {
         branch     = "main"
         identifier = "drewmullen/demo-tfc-vcs-trunkbased"
-        
         github_app_installation_id = "ghain-gurYHzDBdnByPE5g"
     }
+    force_delete = true # dont set this - demo purposes only
 }
 
 resource "tfe_variable" "dev_cli_args" {
@@ -41,6 +43,8 @@ resource "tfe_workspace" "prod" {
 
     auto_apply            = true
     queue_all_runs        = true
+    speculative_enabled   = false
+
     file_triggers_enabled = true
     trigger_patterns      = [
       "envs/prod/**/*"
@@ -48,9 +52,9 @@ resource "tfe_workspace" "prod" {
     vcs_repo {
         branch     = "main"
         identifier = "drewmullen/demo-tfc-vcs-trunkbased"
-        
         github_app_installation_id = "ghain-gurYHzDBdnByPE5g"
     }
+    force_delete = true # dont set this - demo purposes only
 }
 
 resource "tfe_variable" "prod_cli_args" {
