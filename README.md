@@ -1,6 +1,6 @@
 # Demo: TFC + VCS + trunk based development
 
-Set 
+Set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 Goal of this demo is to showcase:
 1. creating tfe_ resources 
@@ -23,7 +23,6 @@ Prereqs:
 First Build:
 - uncomment random resource + git push 
 - review first builds (might have to kick off prod)
-
 
 Adding in a provider that needs auth:
 
