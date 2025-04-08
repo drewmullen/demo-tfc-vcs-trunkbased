@@ -11,7 +11,7 @@ resource "aws_ssm_parameter" "name" {
 }
 
 data "vault_generic_secret" "name" {
-  path = "kvv2/data/test"
+  path = "kvv2/test"
 }
 
 provider "vault" {
