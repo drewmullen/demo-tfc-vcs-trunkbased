@@ -4,14 +4,25 @@ resource "random_pet" "name" {
   separator = "-"
 }
 
-resource "aws_ssm_parameter" "name" {
-  name  = data.vault_generic_secret.name.data["name"]  #"/${var.name}/app_name"
-  type  = "String"
-  value = random_pet.name.id
-}
+# resource "aws_ssm_parameter" "name" {
+#   name  = data.vault_generic_secret.name.data["name"]  #"/${var.name}/app_name"
+#   type  = "String"
+#   value = random_pet.name.id
+# }
 
 data "vault_generic_secret" "name" {
   path = "kvv2/test"
+}
+
+output "name" {
+  value = data.vault_generic_secret.name.data["name"]
+}
+
+resource "vault_generic_secret" "test" {
+  path = "kvv2/test2"
+  data_json = jsonencode({
+    name = random_pet.name.id
+  })
 }
 
 provider "vault" {
