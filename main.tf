@@ -13,3 +13,7 @@ resource "aws_ssm_parameter" "name" {
 data "vault_generic_secret" "name" {
   path = "kvv2/data/test"
 }
+
+provider "vault" {
+  skip_tls_verify = true
+}
