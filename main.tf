@@ -5,7 +5,11 @@ resource "random_pet" "name" {
 }
 
 resource "aws_ssm_parameter" "name" {
-  name  = "/${var.name}/app_name"
+  name  = data.vault_generic_secret.name.data["name"]  #"/${var.name}/app_name"
   type  = "String"
   value = random_pet.name.id
+}
+
+data "vault_generic_secret" "name" {
+  path = "kvv2/data/test"
 }
