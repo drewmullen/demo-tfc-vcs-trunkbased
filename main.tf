@@ -16,6 +16,7 @@ data "vault_generic_secret" "name" {
 
 output "name" {
   value = data.vault_generic_secret.name.data["name"]
+  sensitive = true
 }
 
 resource "vault_generic_secret" "test" {
