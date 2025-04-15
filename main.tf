@@ -10,22 +10,22 @@ resource "random_pet" "name" {
 #   value = random_pet.name.id
 # }
 
-data "vault_generic_secret" "name" {
-  path = "kvv2/test"
-}
+# data "vault_generic_secret" "name" {
+#   path = "kvv2/test"
+# }
 
-output "name" {
-  value = data.vault_generic_secret.name.data["name"]
-  sensitive = true
-}
+# output "name" {
+#   value = data.vault_generic_secret.name.data["name"]
+#   sensitive = true
+# }
 
-resource "vault_generic_secret" "test" {
-  path = "kvv2/test2"
-  data_json = jsonencode({
-    name = random_pet.name.id
-  })
-}
+# resource "vault_generic_secret" "test" {
+#   path = "kvv2/test2"
+#   data_json = jsonencode({
+#     name = random_pet.name.id
+#   })
+# }
 
-provider "vault" {
-  skip_tls_verify = true
-}
+# provider "vault" {
+#   skip_tls_verify = true
+# }
