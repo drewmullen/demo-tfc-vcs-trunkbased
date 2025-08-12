@@ -10,9 +10,9 @@ resource "random_pet" "name" {
 #   value = random_pet.name.id
 # }
 
-# data "vault_generic_secret" "name" {
-#   path = "kvv2/test"
-# }
+data "vault_generic_secret" "name" {
+  path = "kvv2/test"
+}
 
 # output "name" {
 #   value = data.vault_generic_secret.name.data["name"]
@@ -24,8 +24,4 @@ resource "random_pet" "name" {
 #   data_json = jsonencode({
 #     name = random_pet.name.id
 #   })
-# }
-
-# provider "vault" {
-#   skip_tls_verify = true
 # }
